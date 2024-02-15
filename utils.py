@@ -74,7 +74,8 @@ def convert_dataframe(results_records: list):
                             row["benchmark_family"] = row["benchmark"]
                         rows.append(row)
     df = pd.DataFrame(rows)
-    df["date"] = pd.to_datetime(df["date"].apply(lambda x: x.split("T")[0]), format="%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"].apply(lambda x: x.split("T")[0]), format="%Y-%m-%d", errors="coerce")
+    # df = df["date"]
     return df
 
 
@@ -87,9 +88,10 @@ if __name__ == '__main__':
 
     # run before !git clone https://huggingface.co/datasets/open-llm-leaderboard/results
     records = load_leaderboard_records(Path("results/"))
-    print(records)
+    # print(records)
 
     df = convert_dataframe(records)
-    print(df.benchmark_family.unique())
+    df[df.model_name.str.contains("Qwen/Qwen-72B")]
+    # print(df.benchmark_family.unique())
     # print(df.to_string())
 

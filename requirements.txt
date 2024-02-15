@@ -3,3 +3,4 @@ pandas
 jupyter
 kaleido
 matplotlib
+tabulate
